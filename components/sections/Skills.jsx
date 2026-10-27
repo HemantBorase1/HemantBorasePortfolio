@@ -6,16 +6,18 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
 import Reveal from "@/components/interactive/Reveal";
-import { Layers, Server, Database, Wrench } from "lucide-react";
+import { Layers, Server, Database, Wrench, Code2, Bot } from "lucide-react";
 
 export default function Skills() {
   const categories = Object.keys(skillsData);
   const [activeCategory, setActiveCategory] = useState("All");
 
   const categoryIcons = {
+    Languages: Code2,
     Frontend: Layers,
     Backend: Server,
     Database: Database,
+    AI: Bot,
     Tools: Wrench,
   };
 
@@ -75,33 +77,14 @@ export default function Skills() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="flex flex-wrap gap-2">
                     {items.map((skill) => (
-                      <div
+                      <span
                         key={skill.name}
-                        className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-100 dark:border-zinc-800/60"
+                        className="px-3 py-1.5 rounded-xl text-sm font-medium bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-100 dark:border-zinc-800/60 text-zinc-800 dark:text-zinc-200"
                       >
-                        <span className="text-sm font-medium text-zinc-800 dark:text-zinc-200">
-                          {skill.name}
-                        </span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] text-zinc-400 font-mono">
-                            {skill.years}
-                          </span>
-                          <Badge
-                            size="xs"
-                            variant={
-                              skill.level === "Expert"
-                                ? "indigo"
-                                : skill.level === "Advanced"
-                                ? "cyan"
-                                : "default"
-                            }
-                          >
-                            {skill.level}
-                          </Badge>
-                        </div>
-                      </div>
+                        {skill.name}
+                      </span>
                     ))}
                   </div>
                 </Card>

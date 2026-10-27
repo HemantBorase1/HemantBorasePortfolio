@@ -2,7 +2,7 @@
 
 import { siteConfig } from "@/data/site";
 import { ArrowUp } from "lucide-react";
-import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -46,15 +46,6 @@ export default function Footer() {
               className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-500 transition-all hover:scale-105 shadow-sm"
             >
               <FaLinkedin className="w-4 h-4" />
-            </a>
-            <a
-              href={siteConfig.socialLinks.twitter}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Twitter Profile"
-              className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-500 transition-all hover:scale-105 shadow-sm"
-            >
-              <FaXTwitter className="w-4 h-4" />
             </a>
           </div>
 

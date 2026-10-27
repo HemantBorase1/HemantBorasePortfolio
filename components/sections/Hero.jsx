@@ -6,14 +6,14 @@ import TypingText from "@/components/interactive/TypingText";
 import TiltCard from "@/components/interactive/TiltCard";
 import Button from "@/components/ui/Button";
 import { ArrowRight, Download, Sparkles, Terminal } from "lucide-react";
-import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
 export default function Hero() {
   const typingWords = [
-    "Full-Stack Architect",
-    "React & Next.js Specialist",
-    "Modern Web Consultant",
-    "Scalable Systems Engineer",
+    "Software Developer",
+    "Full-Stack Engineer",
+    "Next.js & Node.js Developer",
+    "AI-Integrated Web Apps",
   ];
 
   return (
@@ -66,21 +66,21 @@ export default function Hero() {
             <Reveal delay={0.5}>
               <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4">
                 <Button href="#projects" variant="primary" size="lg">
-                  <span>Explore Work</span>
+                  <span>View Projects</span>
                   <ArrowRight className="w-4 h-4 ml-1" />
+                </Button>
+                <Button href="#contact" variant="outline" size="lg">
+                  <span>Contact Me</span>
                 </Button>
                 <Button
                   href={siteConfig.resumePath}
-                  variant="outline"
+                  variant="ghost"
                   size="lg"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <Download className="w-4 h-4 mr-2" />
                   <span>Resume</span>
-                </Button>
-                <Button href="#contact" variant="ghost" size="lg">
-                  <span>Hire Me</span>
                 </Button>
               </div>
             </Reveal>
@@ -107,15 +107,6 @@ export default function Hero() {
                     className="p-2 rounded-lg hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                   >
                     <FaLinkedin className="w-4 h-4" />
-                  </a>
-                  <a
-                    href={siteConfig.socialLinks.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Twitter Profile"
-                    className="p-2 rounded-lg hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                  >
-                    <FaXTwitter className="w-4 h-4" />
                   </a>
                 </div>
               </div>
@@ -145,8 +136,8 @@ export default function Hero() {
                   <code>
                     <span className="text-purple-400">const</span> developer = {"{\n"}
                     {"  "}name: <span className="text-emerald-300">&apos;Hemant Borase&apos;</span>,{"\n"}
-                    {"  "}title: <span className="text-emerald-300">&apos;Full Stack Engineer&apos;</span>,{"\n"}
-                    {"  "}focus: [<span className="text-amber-300">&apos;Next.js&apos;</span>, <span className="text-amber-300">&apos;React&apos;</span>, <span className="text-amber-300">&apos;Node&apos;</span>],{"\n"}
+                    {"  "}title: <span className="text-emerald-300">&apos;Software Developer&apos;</span>,{"\n"}
+                    {"  "}focus: [<span className="text-amber-300">&apos;Next.js&apos;</span>, <span className="text-amber-300">&apos;Node.js&apos;</span>, <span className="text-amber-300">&apos;Supabase&apos;</span>],{"\n"}
                     {"  "}cleanCode: <span className="text-cyan-300">true</span>,{"\n"}
                     {"  "}hardWorker: <span className="text-cyan-300">true</span>,{"\n"}
                     {"  "}openToWork: <span className="text-cyan-300">true</span>,{"\n"}

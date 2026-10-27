@@ -3,18 +3,22 @@
  */
 export const siteConfig = {
   name: "Hemant Borase",
-  role: "Full Stack Engineer & Freelance Developer",
-  tagline: "Crafting scalable web architectures, modern interfaces, and high-impact digital solutions.",
-  bio: "I am a passionate software engineer with expertise in React, Next.js, Node.js, and cloud systems. I specialize in building responsive, high-performance web applications and transforming ideas into robust digital products for startups and enterprises.",
-  email: "hemant.borase@example.com",
-  location: "Pune, Maharashtra, India",
+  role: "Software Developer & Freelancer",
+  tagline:
+    "I build scalable full-stack web apps with Next.js, Node.js and Supabase, with AI integrated to make them smarter.",
+  summary:
+    "Enthusiastic Software Developer passionate about building scalable, high-performance applications using strong technical and problem-solving skills. Proficient in Core Java, OOP, and full-stack development with Next.js, Node.js, SQL, Supabase, and RESTful APIs, with experience delivering secure, scalable solutions and integrating Artificial Intelligence to build intelligent, data-driven applications.",
+  email: "borasehemant151@gmail.com",
+  phone: "+91 7972600508",
+  location: "Pune, India",
   availableForHire: true,
   socialLinks: {
-    github: "https://github.com/hemantborase",
-    linkedin: "https://linkedin.com/in/hemantborase",
-    twitter: "https://twitter.com/hemantborase",
+    // TODO: Replace "#" with your real GitHub URL
+    github: "#",
+    // TODO: Replace "#" with your real LinkedIn URL
+    linkedin: "#",
   },
-  resumePath: "/resume/resume.pdf",
+  resumePath: "/resume/Hemant_Borase_Resume.pdf",
   navLinks: [
     { label: "Home", href: "#hero" },
     { label: "About", href: "#about" },

@@ -10,12 +10,13 @@ import Reveal from "@/components/interactive/Reveal";
 import {
   Mail,
   MapPin,
+  Phone,
   Send,
   CheckCircle2,
   AlertCircle,
   Loader2,
 } from "lucide-react";
-import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -133,6 +134,21 @@ export default function Contact() {
                     </div>
                   </a>
 
+                  <a
+                    href={`tel:${siteConfig.phone}`}
+                    className="flex items-center gap-4 p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-100 dark:border-zinc-800/80 hover:border-indigo-500/50 transition-colors group"
+                  >
+                    <div className="p-2.5 rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400 group-hover:scale-105 transition-transform">
+                      <Phone className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-xs text-zinc-400 font-medium">Phone</div>
+                      <div className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+                        {siteConfig.phone}
+                      </div>
+                    </div>
+                  </a>
+
                   <div className="flex items-center gap-4 p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-100 dark:border-zinc-800/80">
                     <div className="p-2.5 rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400">
                       <MapPin className="w-5 h-5" />
@@ -168,15 +184,6 @@ export default function Contact() {
                       className="p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-500 transition-colors"
                     >
                       <FaLinkedin className="w-5 h-5" />
-                    </a>
-                    <a
-                      href={siteConfig.socialLinks.twitter}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Twitter Profile"
-                      className="p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-500 transition-colors"
-                    >
-                      <FaXTwitter className="w-5 h-5" />
                     </a>
                   </div>
                 </div>
