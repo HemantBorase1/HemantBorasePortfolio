@@ -1,116 +1,108 @@
 "use client";
 
-import Link from "next/link";
+import { useState } from "react";
+import Image from "next/image";
 import { projectsData } from "@/data/projects";
 import SectionHeading from "@/components/ui/SectionHeading";
-import Card from "@/components/ui/Card";
 import Badge from "@/components/ui/Badge";
+import TiltCard from "@/components/interactive/TiltCard";
 import Reveal from "@/components/interactive/Reveal";
-import { ExternalLink, ArrowRight, FolderGit2 } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
+
+/** Individual Project Card with 16:9 Image, Badges, Details, and GitHub Link */
+function ProjectCard({ project }) {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <TiltCard
+      maxTilt={6}
+      glare={true}
+      className="h-full rounded-2xl p-0 transition-all duration-300 group"
+    >
+      <div className="flex flex-col h-full rounded-2xl bg-zinc-900/60 dark:bg-zinc-900/40 backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800/80 hover:border-indigo-500/50 dark:hover:border-indigo-500/50 transition-all duration-300 overflow-hidden shadow-lg hover:shadow-indigo-500/10 hover:-translate-y-1">
+        {/* a) Project Image: 16:9 Aspect Ratio */}
+        <div className="relative w-full aspect-video overflow-hidden bg-gradient-to-br from-indigo-950/80 via-zinc-900 to-purple-950/80 border-b border-zinc-200/30 dark:border-zinc-800/80">
+          {imgError ? (
+            /* Fallback placeholder when image file is missing */
+            <div
+              className="w-full h-full flex flex-col items-center justify-center p-6 text-center select-none"
+              aria-label={`${project.title} preview placeholder`}
+            >
+              <div className="w-12 h-12 rounded-xl bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-2">
+                <span className="text-xl font-bold">{project.title.charAt(0)}</span>
+              </div>
+              <h4 className="text-base font-semibold text-zinc-200">{project.title}</h4>
+              <p className="text-xs text-zinc-400 mt-1 font-mono">Screenshot coming soon</p>
+            </div>
+          ) : (
+            <Image
+              src={project.image}
+              alt={`Screenshot of ${project.title} web application`}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
+              onError={() => setImgError(true)}
+            />
+          )}
+        </div>
+
+        {/* Card Body */}
+        <div className="flex-1 flex flex-col p-6 sm:p-7">
+          {/* b) Project Title */}
+          <h3 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">
+            {project.title}
+          </h3>
+
+          {/* c) Tech Stack Badge Pills */}
+          <div className="mt-3.5 flex flex-wrap gap-1.5">
+            {project.techStack.map((tech) => (
+              <Badge key={tech} size="xs" variant="default">
+                {tech}
+              </Badge>
+            ))}
+          </div>
+
+          {/* d) Short Description (line-clamp-3) */}
+          <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed line-clamp-3">
+            {project.shortDescription}
+          </p>
+
+          {/* e) Bottom Right: ONLY a GitHub Icon */}
+          <div className="mt-auto pt-6 flex items-center justify-end">
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View ${project.title} on GitHub`}
+                className="p-2.5 rounded-xl text-zinc-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 transition-all duration-200 hover:scale-110"
+              >
+                <FaGithub className="w-5 h-5" />
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </TiltCard>
+  );
+}
 
 export default function Projects() {
   return (
     <section id="projects" className="py-20 md:py-28 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* 1. TITLE: Just "Projects" */}
         <SectionHeading
-          badge="Featured Projects"
-          title="Case Studies &amp; Products"
-          subtitle="A selection of high-impact web apps, distributed platforms, and client solutions I've architected."
+          badge="Portfolio"
+          title="Projects"
+          subtitle="A selection of full-stack web applications and intelligent platforms I have built."
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Responsive Grid: 1 col on mobile, 2 cols on tablet/desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 mt-12 items-stretch">
           {projectsData.map((project, index) => (
-            <Reveal key={project.slug} delay={0.1 * (index + 1)}>
-              <Card className="flex flex-col h-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-6 sm:p-7 group">
-                {/* Visual Header / Banner */}
-                <div className="relative w-full h-48 rounded-xl bg-gradient-to-br from-indigo-950 via-zinc-900 to-zinc-950 flex flex-col justify-between p-5 border border-zinc-800 overflow-hidden mb-6">
-                  {/* Decorative glow */}
-                  <div className="absolute -top-12 -right-12 w-36 h-36 rounded-full bg-indigo-500/20 blur-2xl group-hover:bg-indigo-500/30 transition-all" />
-
-                  <div className="flex items-center justify-between z-10">
-                    <span className="p-2 rounded-lg bg-white/10 text-white backdrop-blur-md">
-                      <FolderGit2 className="w-5 h-5 text-indigo-400" />
-                    </span>
-                    <span className="text-xs font-mono text-zinc-400 bg-black/40 px-2.5 py-1 rounded-md border border-white/5">
-                      Case Study #0{index + 1}
-                    </span>
-                  </div>
-
-                  <div className="z-10">
-                    <h4 className="text-lg font-bold text-white tracking-tight line-clamp-1">
-                      {project.title}
-                    </h4>
-                    <p className="text-xs text-indigo-300 font-mono mt-0.5">
-                      {project.role}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                      <Link href={`/projects/${project.slug}/`}>
-                        {project.title}
-                      </Link>
-                    </h3>
-                    <p className="mt-2.5 text-sm text-zinc-600 dark:text-zinc-400 line-clamp-3 leading-relaxed">
-                      {project.shortDescription}
-                    </p>
-
-                    {/* Tech Stack Pills */}
-                    <div className="mt-4 flex flex-wrap gap-1.5">
-                      {project.techStack.slice(0, 4).map((tech) => (
-                        <Badge key={tech} size="xs" variant="default">
-                          {tech}
-                        </Badge>
-                      ))}
-                      {project.techStack.length > 4 && (
-                        <Badge size="xs" variant="outline">
-                          +{project.techStack.length - 4} more
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Actions / Links */}
-                  <div className="mt-6 pt-5 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
-                    <Link
-                      href={`/projects/${project.slug}/`}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:gap-2 transition-all"
-                    >
-                      <span>Read Case Study</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-
-                    <div className="flex items-center gap-3">
-                      {project.githubUrl && (
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`GitHub repository for ${project.title}`}
-                          className="p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                        >
-                          <FaGithub className="w-4 h-4" />
-                        </a>
-                      )}
-                      {project.liveUrl && (
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`Live demo for ${project.title}`}
-                          className="p-2 rounded-lg text-zinc-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </Card>
+            <Reveal key={project.slug} delay={0.15 * (index + 1)} className="h-full">
+              <ProjectCard project={project} />
             </Reveal>
           ))}
         </div>

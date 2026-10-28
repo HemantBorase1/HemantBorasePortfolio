@@ -1,23 +1,26 @@
 /**
- * Honors, certifications, and career milestones.
+ * Honors, hackathon wins, and certifications.
  */
 export const achievementsData = [
   {
-    title: "Winner, QuantQuest Hackathon (QuantBit)",
+    title: "Winner, QuantQuest Hackathon",
+    subtitle: "QuantBit",
     year: "2025",
-    description:
-      "Won the QuantQuest Hackathon organised by QuantBit.",
+    type: "winner",
+    icon: "Trophy",
   },
   {
     title: "Finalist, Smart India Hackathon",
+    subtitle: "Ministry of Education & AICTE",
     year: "2024",
-    description:
-      "Selected as a finalist in the prestigious Smart India Hackathon 2024.",
+    type: "finalist",
+    icon: "Award",
   },
   {
-    title: "Certification: Project Management Foundations",
+    title: "Project Management Foundations",
+    subtitle: "LinkedIn Learning",
     year: "",
-    description:
-      "Completed the Project Management Foundations certification on LinkedIn Learning.",
+    type: "certification",
+    icon: "BadgeCheck",
   },
 ];

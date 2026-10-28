@@ -24,7 +24,7 @@ export default function SectionHeading({
         </span>
       )}
       {title && (
-        <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl dark:text-zinc-50">
+        <h2 className="font-serif text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl lg:text-5xl dark:text-zinc-50">
           {title}
         </h2>
       )}

@@ -1,30 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { skillsData } from "@/data/skills";
 import SectionHeading from "@/components/ui/SectionHeading";
-import Card from "@/components/ui/Card";
-import Badge from "@/components/ui/Badge";
-import Reveal from "@/components/interactive/Reveal";
-import { Layers, Server, Database, Wrench, Code2, Bot } from "lucide-react";
 
 export default function Skills() {
-  const categories = Object.keys(skillsData);
-  const [activeCategory, setActiveCategory] = useState("All");
+  const shouldReduceMotion = useReducedMotion();
 
-  const categoryIcons = {
-    Languages: Code2,
-    Frontend: Layers,
-    Backend: Server,
-    Database: Database,
-    AI: Bot,
-    Tools: Wrench,
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: shouldReduceMotion
+        ? { duration: 0.3 }
+        : {
+            staggerChildren: 0.05,
+            delayChildren: 0.1,
+          },
+    },
   };
 
-  const filteredCategories =
-    activeCategory === "All"
-      ? categories
-      : categories.filter((cat) => cat === activeCategory);
+  const itemVariants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
 
   return (
     <section id="skills" className="py-20 md:py-28 bg-zinc-50/50 dark:bg-zinc-950/30 relative">
@@ -35,63 +38,56 @@ export default function Skills() {
           subtitle="A comprehensive overview of the modern tools and frameworks I use to engineer robust products."
         />
 
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {["All", ...categories].map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => setActiveCategory(cat)}
-              suppressHydrationWarning
-              className={`px-4 py-2 text-xs sm:text-sm font-medium rounded-xl transition-all ${
-                activeCategory === cat
-                  ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/20"
-                  : "bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 border border-zinc-200 dark:border-zinc-800"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Category Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-          {filteredCategories.map((category) => {
-            const Icon = categoryIcons[category] || Layers;
-            const items = skillsData[category] || [];
+        {/* Clean responsive grid: ~3 cols mobile, 4-5 cols tablet, 6-7 cols desktop */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-40px" }}
+          className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-y-10 gap-x-6 sm:gap-y-12 sm:gap-x-8 items-center justify-items-center max-w-5xl mx-auto mt-12"
+        >
+          {skillsData.map((skill) => {
+            const Icon = skill.icon;
+            const brandColor = skill.color;
 
             return (
-              <Reveal key={category} delay={0.1}>
-                <Card className="h-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-                  <div className="flex items-center gap-3 pb-4 mb-4 border-b border-zinc-100 dark:border-zinc-800">
-                    <div className="p-2.5 rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-lg text-zinc-900 dark:text-zinc-50">
-                        {category}
-                      </h3>
-                      <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                        {items.length} key competencies
-                      </p>
-                    </div>
-                  </div>
+              <motion.div
+                key={skill.name}
+                variants={itemVariants}
+                whileHover={
+                  shouldReduceMotion
+                    ? {}
+                    : {
+                        scale: 1.12,
+                        y: -6,
+                        transition: { duration: 0.25, ease: "easeOut" },
+                      }
+                }
+                className="group flex flex-col items-center justify-center text-center cursor-pointer select-none relative"
+              >
+                {/* Soft ambient brand glow on hover */}
+                <div
+                  className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-40 blur-xl transition-opacity duration-300 pointer-events-none -z-10"
+                  style={{ backgroundColor: brandColor }}
+                  aria-hidden="true"
+                />
 
-                  <div className="flex flex-wrap gap-2">
-                    {items.map((skill) => (
-                      <span
-                        key={skill.name}
-                        className="px-3 py-1.5 rounded-xl text-sm font-medium bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-100 dark:border-zinc-800/60 text-zinc-800 dark:text-zinc-200"
-                      >
-                        {skill.name}
-                      </span>
-                    ))}
-                  </div>
-                </Card>
-              </Reveal>
+                {/* Icon: muted gray by default, transitions to brand color on hover */}
+                <div
+                  className="text-zinc-400 transition-colors duration-300 group-hover:text-[var(--hover-color)] flex items-center justify-center"
+                  style={{ "--hover-color": brandColor }}
+                >
+                  <Icon className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 drop-shadow-sm" />
+                </div>
+
+                {/* Skill Name */}
+                <span className="mt-3 text-xs sm:text-sm font-medium text-zinc-400 group-hover:text-zinc-100 transition-colors duration-300 tracking-tight text-center">
+                  {skill.name}
+                </span>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

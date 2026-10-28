@@ -1,6 +1,7 @@
 /**
- * Portfolio project showcases and detailed case studies.
+ * Portfolio project showcases and case studies.
  */
+
 export const projectsData = [
   {
     slug: "agriconnect",
@@ -19,7 +20,7 @@ export const projectsData = [
     ],
     result:
       "An integrated platform serving farmers, vendors, and admins with secure and scalable operations.",
-    image: "/images/projects/agriconnect.png",
+    image: "/images/projects/Agriconnect.png",
     // TODO: Replace "#" with the live URL for AgriConnect
     liveUrl: "#",
     // TODO: Replace "#" with the GitHub URL for AgriConnect
@@ -41,7 +42,7 @@ export const projectsData = [
       "AI-driven features for intelligent food utilization and automated recipe generation",
     ],
     result: "A centralized food-sharing platform that streamlines donation workflows.",
-    image: "/images/projects/annadan.png",
+    image: "/images/projects/Annadan.png",
     // TODO: Replace "#" with the live URL for Annadan
     liveUrl: "#",
     // TODO: Replace "#" with the GitHub URL for Annadan

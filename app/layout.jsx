@@ -1,4 +1,5 @@
 import "./globals.css";
+import { DM_Sans, Source_Serif_4 } from "next/font/google";
 import { siteConfig } from "@/data/site";
 import Providers from "@/components/layout/Providers";
 import Navbar from "@/components/layout/Navbar";
@@ -6,6 +7,20 @@ import Footer from "@/components/layout/Footer";
 import ScrollProgress from "@/components/interactive/ScrollProgress";
 import CustomCursor from "@/components/interactive/CustomCursor";
 import ParticlesBackground from "@/components/interactive/ParticlesBackground";
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const sourceSerif4 = Source_Serif_4({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-serif",
+  display: "swap",
+});
 
 export const metadata = {
   metadataBase: new URL("https://hemantborase.dev"),
@@ -56,7 +71,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className="min-h-screen flex flex-col bg-zinc-950 text-zinc-100 antialiased"
+        className={`${dmSans.variable} ${sourceSerif4.variable} font-sans min-h-screen flex flex-col bg-zinc-950 text-zinc-100 antialiased`}
         suppressHydrationWarning
       >
         <Providers>

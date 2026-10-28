@@ -4,6 +4,7 @@
 export const siteConfig = {
   name: "Hemant Borase",
   role: "Software Developer & Freelancer",
+  heroWords: ["Software Developer", "Freelancer"],
   tagline:
     "I build scalable full-stack web apps with Next.js, Node.js and Supabase, with AI integrated to make them smarter.",
   summary:
