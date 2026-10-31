@@ -22,6 +22,12 @@ const sourceSerif4 = Source_Serif_4({
   display: "swap",
 });
 
+export const viewport = {
+  themeColor: "#090d16",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata = {
   metadataBase: new URL("https://hemantborase.dev"),
   title: {

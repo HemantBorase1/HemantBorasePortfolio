@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
+
+const emptySubscribe = () => () => {};
 
 /**
  * Lightweight, high-performance canvas particle constellation background.
@@ -8,14 +10,19 @@ import { useEffect, useRef, useState } from "react";
  */
 export default function ParticlesBackground() {
   const canvasRef = useRef(null);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
 
   useEffect(() => {
     if (!mounted) return;
+
+    // Respect reduced motion preference
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -27,8 +34,9 @@ export default function ParticlesBackground() {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    // Number of particles proportional to screen width
-    const particleCount = Math.floor(Math.min(width, 1400) / 28);
+    // Number of particles proportional to screen width, reduced on mobile
+    const isMobile = width < 768;
+    const particleCount = isMobile ? 14 : Math.floor(Math.min(width, 1400) / 28);
     const particles = [];
 
     const particleColor = "rgba(129, 140, 248, 0.45)";

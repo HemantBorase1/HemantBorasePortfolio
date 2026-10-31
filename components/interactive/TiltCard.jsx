@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 /**
  * Interactive 3D tilt card that rotates subtly based on cursor position.
@@ -14,12 +14,13 @@ export default function TiltCard({
   ...props
 }) {
   const cardRef = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
   const [glarePosition, setGlarePosition] = useState({ x: 50, y: 50, opacity: 0 });
 
   const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
+    if (shouldReduceMotion || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;

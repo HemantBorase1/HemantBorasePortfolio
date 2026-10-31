@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { fadeUp } from "@/lib/animations";
 
 /**
@@ -16,13 +16,23 @@ export default function Reveal({
   once = true,
   ...props
 }) {
+  const shouldReduceMotion = useReducedMotion();
+
+  const activeVariants = shouldReduceMotion
+    ? { hidden: { opacity: 0 }, visible: { opacity: 1 } }
+    : variants;
+
   return (
     <motion.div
       initial="hidden"
       whileInView="visible"
       viewport={{ once, margin: "-40px" }}
-      variants={variants}
-      transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
+      variants={activeVariants}
+      transition={{
+        duration: shouldReduceMotion ? 0.01 : duration,
+        delay: shouldReduceMotion ? 0 : delay,
+        ease: [0.22, 1, 0.36, 1],
+      }}
       className={`${width} ${className}`}
       {...props}
     >

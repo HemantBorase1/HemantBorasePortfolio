@@ -106,9 +106,8 @@ function ProfileCard() {
             <div className="relative w-full aspect-[4/5] overflow-hidden">
               <Image
                 src="/images/profile.jpg"
-                alt="Hemant Borase"
+                alt="Hemant Borase profile photograph"
                 fill
-                priority
                 sizes="(max-width: 640px) 280px, (max-width: 1024px) 340px, 380px"
                 className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
                 onError={() => setImgError(true)}
