@@ -159,7 +159,7 @@ export default function Hero() {
                   <span>Contact Me</span>
                 </Button>
                 <Button
-                  href={siteConfig.resumePath}
+                  href={siteConfig.resume}
                   variant="ghost"
                   size="lg"
                   target="_blank"

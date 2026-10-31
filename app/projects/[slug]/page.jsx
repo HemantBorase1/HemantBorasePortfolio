@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
 
+export const dynamic = "force-static";
+
 /**
  * Pre-generate static params for all project slugs for static site export.
  */

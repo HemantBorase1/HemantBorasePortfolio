@@ -12,7 +12,10 @@ export function useScrollSpy(sectionIds = [], offset = 120) {
   // Store sectionIds in a ref so the effect doesn't re-run on every render
   // (the array is created inline in Navbar so it would be a new reference each render)
   const idsRef = useRef(sectionIds);
-  idsRef.current = sectionIds;
+
+  useEffect(() => {
+    idsRef.current = sectionIds;
+  }, [sectionIds]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;

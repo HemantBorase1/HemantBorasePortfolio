@@ -1,8 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { motion } from "framer-motion";
 import { useMousePosition } from "@/hooks/useMousePosition";
+
+const emptySubscribe = () => () => {};
+
+function getIsTouchSnapshot() {
+  return (
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0 ||
+    window.matchMedia("(pointer: coarse)").matches
+  );
+}
 
 /**
  * Custom interactive dual-ring cursor that follows mouse movement.
@@ -11,22 +21,20 @@ import { useMousePosition } from "@/hooks/useMousePosition";
  */
 export default function CustomCursor() {
   const { x, y, isPointerInside } = useMousePosition();
-  const [mounted, setMounted] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(true);
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+  const isTouchDevice = useSyncExternalStore(
+    emptySubscribe,
+    getIsTouchSnapshot,
+    () => true
+  );
   const [isHoveringClickable, setIsHoveringClickable] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-
-    // Detect touch-only screen — run once on mount
-    const isTouch =
-      "ontouchstart" in window ||
-      navigator.maxTouchPoints > 0 ||
-      window.matchMedia("(pointer: coarse)").matches;
-
-    setIsTouchDevice(isTouch);
-
-    if (isTouch) return;
+    if (isTouchDevice) return;
 
     // Hide the native cursor when our custom cursor is active
     document.body.classList.add("has-custom-cursor");
@@ -50,7 +58,7 @@ export default function CustomCursor() {
       document.body.classList.remove("has-custom-cursor");
       window.removeEventListener("mouseover", handleMouseOver);
     };
-  }, []);
+  }, [isTouchDevice]);
 
   // Avoid any SSR hydration mismatch: server and initial client render return null
   if (!mounted || isTouchDevice || !isPointerInside) {

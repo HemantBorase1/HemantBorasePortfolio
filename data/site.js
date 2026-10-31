@@ -15,11 +15,12 @@ export const siteConfig = {
   availableForHire: true,
   socialLinks: {
     // TODO: Replace "#" with your real GitHub URL
-    github: "#",
+    github: "https://github.com/HemantBorase1",
     // TODO: Replace "#" with your real LinkedIn URL
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/hemant-borase-7b2585257/",
   },
-  resumePath: "/resume/Hemant_Borase_Resume.pdf",
+  resume: "https://drive.google.com/file/d/1njcC7ImTgZBmqJ7mpebMY3-m0tIfioSa/view?usp=drive_link",
+  resumePath: "https://drive.google.com/file/d/1njcC7ImTgZBmqJ7mpebMY3-m0tIfioSa/view?usp=drive_link",
   navLinks: [
     { label: "Home", href: "#hero" },
     { label: "About", href: "#about" },

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { siteConfig } from "@/data/site";
 import { submitContactForm } from "@/lib/submitForm";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -23,6 +23,7 @@ export default function Contact() {
     name: "",
     email: "",
     message: "",
+    botcheck: false,
   });
 
   const [errors, setErrors] = useState({});
@@ -31,6 +32,16 @@ export default function Contact() {
     success: null,
     message: "",
   });
+  const [cooldown, setCooldown] = useState(0);
+
+  // 30-second cooldown timer after successful submission
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = setInterval(() => {
+      setCooldown((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [cooldown]);
 
   const validate = () => {
     const errs = {};
@@ -52,8 +63,11 @@ export default function Contact() {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
     // Clear field-specific error on change
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: null }));
@@ -62,6 +76,9 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Prevent double submission and enforce cooldown
+    if (status.submitting || cooldown > 0) return;
 
     if (!validate()) return;
 
@@ -72,6 +89,7 @@ export default function Contact() {
         name: formData.name,
         email: formData.email,
         message: formData.message,
+        botcheck: formData.botcheck,
       });
 
       if (response.success) {
@@ -80,19 +98,20 @@ export default function Contact() {
           success: true,
           message: response.message,
         });
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({ name: "", email: "", message: "", botcheck: false });
+        setCooldown(30); // 30-second cooldown
       } else {
         setStatus({
           submitting: false,
           success: false,
-          message: response.message,
+          message: response.message || `Failed to transmit message. Please email me directly at ${siteConfig.email}.`,
         });
       }
     } catch (err) {
       setStatus({
         submitting: false,
         success: false,
-        message: "Failed to transmit message. Please try again or email directly.",
+        message: `Failed to transmit message. Please email me directly at ${siteConfig.email}.`,
       });
     }
   };
@@ -196,6 +215,19 @@ export default function Contact() {
             <Reveal delay={0.2}>
               <Card className="p-6 sm:p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
                 <form onSubmit={handleSubmit} noValidate className="space-y-5">
+                  {/* Honeypot field for bot detection */}
+                  <input
+                    type="checkbox"
+                    name="botcheck"
+                    checked={formData.botcheck}
+                    onChange={handleChange}
+                    tabIndex={-1}
+                    aria-hidden="true"
+                    suppressHydrationWarning
+                    className="hidden"
+                    style={{ display: "none" }}
+                  />
+
                   {/* Name field */}
                   <div>
                     <label
@@ -300,7 +332,18 @@ export default function Contact() {
                   {status.success === false && (
                     <div className="p-4 rounded-xl bg-rose-50 text-rose-800 dark:bg-rose-950/50 dark:text-rose-200 border border-rose-200 dark:border-rose-800 flex items-start gap-3">
                       <AlertCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
-                      <p className="text-sm">{status.message}</p>
+                      <div className="text-sm">
+                        <p>{status.message}</p>
+                        <p className="mt-1.5 text-xs text-rose-700 dark:text-rose-300">
+                          Direct email:{" "}
+                          <a
+                            href={`mailto:${siteConfig.email}`}
+                            className="underline font-semibold hover:text-rose-900 dark:hover:text-rose-100"
+                          >
+                            {siteConfig.email}
+                          </a>
+                        </p>
+                      </div>
                     </div>
                   )}
 
@@ -309,7 +352,8 @@ export default function Contact() {
                     type="submit"
                     variant="primary"
                     size="lg"
-                    disabled={status.submitting}
+                    disabled={status.submitting || cooldown > 0}
+                    suppressHydrationWarning
                     className="w-full"
                   >
                     {status.submitting ? (
@@ -317,6 +361,8 @@ export default function Contact() {
                         <Loader2 className="w-4 h-4 animate-spin mr-2" />
                         <span>Sending message...</span>
                       </>
+                    ) : cooldown > 0 ? (
+                      <span>Message Sent (wait {cooldown}s)</span>
                     ) : (
                       <>
                         <Send className="w-4 h-4 mr-2" />
