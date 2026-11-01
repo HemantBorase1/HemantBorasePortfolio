@@ -12,7 +12,7 @@ import { FaGithub } from "react-icons/fa6";
 /** Individual Project Card with 16:9 Image, Badges, Details, and GitHub Link */
 function ProjectCard({ project }) {
   const [imgError, setImgError] = useState(false);
-
+ 
   return (
     <TiltCard
       maxTilt={6}
