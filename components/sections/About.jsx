@@ -105,7 +105,7 @@ function ProfileCard() {
           ) : (
             <div className="relative w-full aspect-[4/5] overflow-hidden">
               <Image
-                src="/images/profile.jpg"
+                src="/images/hemant-profile.jpg"
                 alt="Hemant Borase profile photograph"
                 fill
                 sizes="(max-width: 640px) 280px, (max-width: 1024px) 340px, 380px"
