@@ -138,6 +138,12 @@ export default function Hero() {
                     className="text-indigo-600 dark:text-indigo-400"
                   />
                 </span>
+                {/* Visually hidden static text for search-engine crawlers.
+                    The animated TypingText above is JS-only; this ensures role
+                    keywords are present in the server-rendered HTML. */}
+                <span className="sr-only">
+                  {typingWords.join(" & ")}
+                </span>
               </div>
             </Reveal>
 

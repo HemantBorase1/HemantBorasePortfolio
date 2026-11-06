@@ -1,4 +1,5 @@
 import { projectsData } from "@/data/projects";
+import { siteUrl } from "@/data/site";
 
 export const dynamic = "force-static";
 
@@ -6,7 +7,7 @@ export const dynamic = "force-static";
  * Static sitemap generator for SEO indexing across home and case study routes.
  */
 export default function sitemap() {
-  const baseUrl = "https://hemantborase.dev";
+  const baseUrl = siteUrl;
   const currentDate = new Date().toISOString();
 
   // Project slug routes

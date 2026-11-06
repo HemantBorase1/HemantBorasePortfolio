@@ -1,6 +1,13 @@
 /**
  * Site metadata and personal contact/social configuration.
  */
+
+/**
+ * TODO: Replace with your final production domain once it is confirmed.
+ * Used as metadataBase, canonical URL, sitemap base, and JSON-LD url.
+ */
+export const siteUrl = "https://hemantborase.dev";
+
 export const siteConfig = {
   name: "Hemant Borase",
   role: "Software Developer & Freelancer",

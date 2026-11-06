@@ -1,6 +1,6 @@
 import "./globals.css";
 import { DM_Sans, Source_Serif_4 } from "next/font/google";
-import { siteConfig } from "@/data/site";
+import { siteConfig, siteUrl } from "@/data/site";
 import Providers from "@/components/layout/Providers";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -29,12 +29,13 @@ export const viewport = {
 };
 
 export const metadata = {
-  metadataBase: new URL("https://hemantborase.dev"),
+  metadataBase: new URL(siteUrl),
   title: {
-    default: `${siteConfig.name} | ${siteConfig.role}`,
+    default: `Hemant Borase | Software Developer & Freelancer`,
     template: `%s | ${siteConfig.name}`,
   },
-  description: siteConfig.tagline,
+  description:
+    "Full stack developer specialising in Next.js, Node.js and Supabase. I build scalable, AI-integrated web apps — available for freelance contracts and full-time roles.",
   keywords: [
     "Hemant Borase",
     "Software Developer",
@@ -44,33 +45,44 @@ export const metadata = {
     "Supabase Developer",
     "Web Developer Pune",
     "Freelance Software Developer",
+    "React Developer",
+    "Java Developer",
   ],
-  authors: [{ name: siteConfig.name, url: "https://hemantborase.dev" }],
+  authors: [{ name: siteConfig.name, url: siteUrl }],
   creator: siteConfig.name,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://hemantborase.dev",
+    url: siteUrl,
     siteName: `${siteConfig.name} Portfolio`,
-    title: `${siteConfig.name} | ${siteConfig.role}`,
-    description: siteConfig.tagline,
+    title: `Hemant Borase | Software Developer & Freelancer`,
+    description:
+      "Full stack developer specialising in Next.js, Node.js and Supabase. I build scalable, AI-integrated web apps — available for freelance contracts and full-time roles.",
     images: [
       {
         url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: `${siteConfig.name} - Portfolio`,
+        alt: `${siteConfig.name} – Full Stack Developer Portfolio`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} | ${siteConfig.role}`,
-    description: siteConfig.tagline,
+    title: `Hemant Borase | Software Developer & Freelancer`,
+    description:
+      "Full stack developer specialising in Next.js, Node.js and Supabase. I build scalable, AI-integrated web apps — available for freelance contracts and full-time roles.",
     creator: "@hemantborase",
     images: ["/images/og-image.jpg"],
   },
   robots: { index: true, follow: true },
+  verification: {
+    // Set NEXT_PUBLIC_GOOGLE_VERIFICATION in your environment to activate GSC ownership verification.
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || "",
+  },
 };
 
 export default function RootLayout({ children }) {
